@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  react-ts:
+    build: ./react-ts-app
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+
+  go:
+    build: ./go-app
+    ports:
+      - "8000:8000"
+    tty: true
+    stdin_open: true
+
+  db:
+    image: sqlite:3.0
+    volumes:
+      - "./db/data:/var/lib/sqlite"
+      - "./db/my.cnf:/etc/sqlite/conf.d/my.conf"
+    # MYSQL_ROOT_PASSWORDのみをenvファイルで設定
+    env_file:
+      - variables.env
+    ports:
+      - "3306:3306"
